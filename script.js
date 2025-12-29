@@ -35,24 +35,22 @@ function createProjectCard(project, index) {
 
 function createExperienceCard(experience, index) {
   return `
-    <div class="experience-card" onclick="openModal('experience', ${JSON.stringify(
-      experience
-    ).replace(/"/g, "&quot;")})">
-      <div class="experience-content">
-        <div class="experience-header">
-          <div class="company-logo">
-            <img src="${experience.logoPath}" alt="${
-    experience.companyName
-  }" loading="lazy">
-          </div>
+    <div class="experience-timeline-item">
+      <div class="timeline-dot">
+        <div class="timeline-dot-inner">
+          <img src="${experience.logoPath}" alt="${experience.companyName}" loading="lazy">
+        </div>
+      </div>
+      <div class="experience-card">
+        <span class="experience-timeframe">${experience.timeframe}</span>
+        <div class="experience-content">
           <div class="experience-title">
             <h3>${experience.title}</h3>
             <div class="company-name">${experience.companyName}</div>
-            <span class="timeframe">${experience.timeframe}</span>
           </div>
-        </div>
-        <div class="experience-preview">
-          <p>${experience.preview}</p>
+          <div class="experience-preview">
+            <p>${experience.preview}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -252,7 +250,7 @@ const projects = [
   {
     image: "res/stocker.png",
     title: "Stocker",
-    timeframe: "Jun 2025 - Present",
+    timeframe: "Jun 2025 - Aug 2025",
     tech: ["React", "Node.js", "Firebase", "Cloud"],
     preview:
       "<a href='https://stockerstorage.web.app/' target='_blank' rel='noopener noreferrer' style='color:rgb(44, 157, 202); text-decoration: underline;'>Real-time stock trading simulator</a> with dynamic leaderboard",
