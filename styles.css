@@ -597,6 +597,9 @@ header::before {
 
 .modal-footer {
   padding: 24px 16px 0px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .modal-link {

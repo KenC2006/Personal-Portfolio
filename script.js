@@ -161,15 +161,35 @@ function openModal(type, data) {
           .join("")}
       </div>
       ${
-        data.github
+        data.github || data.liveUrl
           ? `
         <div class="modal-footer">
+          ${
+            data.github
+              ? `
           <a href="${data.github}" class="modal-link" target="_blank" rel="noopener noreferrer">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
             </svg>
             View on GitHub
           </a>
+          `
+              : ""
+          }
+          ${
+            data.liveUrl
+              ? `
+          <a href="${data.liveUrl}" class="modal-link" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            View Live Site
+          </a>
+          `
+              : ""
+          }
         </div>
       `
           : ""
@@ -216,25 +236,40 @@ function downloadResume() {
 
 const projects = [
   {
+    image: "res/lattice.png",
+    title: "Lattice",
+    timeframe: "Jan 2025 - Feb 2025",
+    tech: ["C++", "C#", "OpenCV", "OpenGL"],
+    preview:
+      "<a href='https://devpost.com/software/lattice-flck7q' target='_blank' rel='noopener noreferrer' style='color:rgb(44, 157, 202); text-decoration: underline;'>Hack the North 2025 project</a>. Won Best Overall and YC Unicorn Prize interview.",
+    details: [
+      "Lattice is a holographic projection framework. Using three Kinect cameras, we capture RGB-D maps that our client software converts into 3D point clouds using the cameras' intrinsic parameters. Each point cloud is colorized with corresponding RGB data and streamed to the server, where multi-sensor calibration is performed using Iterative Closest Point and convex hull enclosure. This process computes the rigid transformations needed to align all point clouds within a common coordinate frame, accounting for each camera's position and orientation to maintain geometric consistency across views.",
+      "During live capture, the server synchronizes timestamps, applies these calibration transforms in real time, and fuses overlapping regions through spatial filtering and averaging. The result is a smooth, fully aligned 3D reconstruction that can be visualized instantly and streamed to the HoloLens for real-time telepresence.",
+    ],
+    github: "https://github.com/KenC2006/Lattice",
+    liveUrl: "https://devpost.com/software/lattice-flck7q",
+  },
+  {
     image: "res/stocker.png",
     title: "Stocker",
     timeframe: "Jun 2025 - Present",
     tech: ["React", "Node.js", "Firebase", "Cloud"],
     preview:
-      "<a href='https://stockerstorage.web.app/' target='_blank' rel='noopener noreferrer' style='color:rgb(44, 157, 202); text-decoration: underline;'>Real-time stock trading simulator</a> with dynamic leaderboard for UofT students",
+      "<a href='https://stockerstorage.web.app/' target='_blank' rel='noopener noreferrer' style='color:rgb(44, 157, 202); text-decoration: underline;'>Real-time stock trading simulator</a> with dynamic leaderboard",
     details: [
       "Stocker is a full stack stock trading simulator. It features real-time trading, monthly contests, and a profit leaderboard to compete against friends. It uses the Finnhub API to pull stock data and deploys cloud scripts for leaderboard updates, with backend data passed to Firebase. For the frontend, I used React with Charka UI, while backend scripting was done with Node.js.",
     ],
     github: "https://github.com/KenC2006/stocker",
+    liveUrl: "https://stockerstorage.web.app/",
   },
 
   {
     title: "Spooky Spikes AI",
     timeframe: "May 2025 - June 2025",
     preview:
-      "Reinforcement learning AI that jumps and ducks under 3D moving bars accurately.",
+      "AI that learns to jump and duck under moving bars.",
     details: [
-      "*Inspired by the Spooky Spikes Minigame from Pummel Party*\n\nUsing TensorFlow and Keras, I implemented a streamlined reinforcement learning pipeline. The AI is trained using a Deep Q-Network (DQN) that considers the player’s current state, the position of upcoming obstacles, and timing. The training process includes a replay buffer with 100,000 randomly sampled experiences, from which the model learns over 20,000 gradient update steps. The learning was stabilized through extensive tuning of hyperparameters, including epsilon decay rates, network architecture, and node density. Various configurations were tested to find the most stable and efficient setup for consistent learning performance.",
+      "*Inspired by the Spooky Spikes Minigame from Pummel Party*\n\nUsing TensorFlow and Keras, I implemented a streamlined reinforcement learning pipeline. The AI is trained using a Deep Q-Network (DQN) that considers the player's current state, the position of upcoming obstacles, and timing. The training process includes a replay buffer with 100,000 randomly sampled experiences, from which the model learns over 20,000 gradient update steps. The learning was stabilized through extensive tuning of hyperparameters, including epsilon decay rates, network architecture, and node density. Various configurations were tested to find the most stable and efficient setup for consistent learning performance.",
     ],
     image: "res/spookySpikes.png",
     gifImage: "res/spooky_spikesGIF.gif",
@@ -245,13 +280,14 @@ const projects = [
     title: "ModelShift",
     timeframe: "Dec 2024 - Mar 2025",
     preview:
-      "<a href='https://modelshift-bbcd8.web.app/' target='_blank' rel='noopener noreferrer' style='color:rgb(44, 157, 202); text-decoration: underline;'>AI comparison tool</a> for multi-model prompting and reponse analysis.",
+      "<a href='https://modelshift-bbcd8.web.app/' target='_blank' rel='noopener noreferrer' style='color:rgb(44, 157, 202); text-decoration: underline;'>AI comparison tool</a> for multi-model prompting and response analysis.",
     details: [
       "ModelShift allows users to send the same prompt to multiple AI providers (ChatGPT, Gemini, Claude, etc) and view responses side-by-side in real-time. The application has a React/Tailwind CSS frontend, dark-light theme styling, and responsive design. The backend is built with Node.js and Express, implementing secure API key management with encryption, rate limiting, and abuse detection. Users can customize system prompts, adjust model temperature and token limits, and export comparison results. The application includes Firebase integration for authentication and data storage, with features like API key usage statistics, multiple provider support, and markdown rendering for AI.",
     ],
     image: "res/modelshift.png",
     tech: ["React", "Node.js", "Crypto"],
     github: "https://github.com/KenC2006/modelShift",
+    liveUrl: "https://modelshift-bbcd8.web.app/",
   },
   {
     title: "DeadKnight",
@@ -269,9 +305,9 @@ const projects = [
     title: "Hyper Cube",
     timeframe: "June 2023 - July 2023",
     preview:
-      "Hyper cube built using an ESP32 board and two-way reflective mirrors.",
+      "Hyper cube built using an ESP32 board and two-way mirrors.",
     details: [
-      "Designed a 3D-printed cube with addressable LED strips and two-way mirrors to create a hypercube light illusion. Powered by an ESP32 running WLED, it allows for dynamic effects, brightness control, and programmable pattern. 3D print STL's and wiring diagrams are on the Github.",
+      "I designed and built a 3D-printed hypercube with LED strips and two-way mirrors. I used an ESP32 board to upload WLED for dynamic lighting effects, brightness control, and programmable patterns. All the STLs and wiring diagrams that I made can be found on my github.",
     ],
     image: "res/cube.png",
     tech: ["Arduino", "C++", "Fusion 360", "Soldering"],
@@ -282,7 +318,7 @@ const projects = [
     timeframe: "June 2023 - July 2023",
     preview: "2 player fighter with knockback, damage, and combo mechanics.",
     details: [
-      "Programmed in Java using Swing and AWT, Smash Blocks features two-player combat, multi-threaded dynammic movement, and fully customizable controls that allow players to re-map keybinds. The game implements platform collision detection, dynamic menus, animated UI, and knockback applification. Players can also perform different attack types and combo chain, ",
+      "Programmed in Java using Swing and AWT, Smash Blocks features two-player combat, multi-threaded dynamic movement, and fully customizable controls that allow players to re-map keybinds. The game implements platform collision detection, dynamic menus, animated UI, and knockback amplification. Players can also perform different attack types and combo chain.",
     ],
     image: "res/smash.png",
     tech: ["Java", "Swing", "JavaFX", "Game Dev"],
@@ -293,7 +329,7 @@ const projects = [
     timeframe: "Apr 2022 - Mar 2022",
     preview: "Remote control car made with Arduino and bluetooth mobile app.",
     details: [
-      "Parts included wires, a 12V battery cartridge, 4 DC motors, a HC-05 chip (bluetooth receiver), Arduino UNO, and L298N motor driver chip. The wires from the DC motors on each side were grouped together and connected to the corresponding ports on the dual motor driver chip. For Bluetooth control, an app was developed using MIT App Inventor for pairing and communication. The app sent text commands when buttons were pressed, which the Arduino interpreted to control the motors accordingly. For a full document breakdown, visit the GitHub.",
+      "Parts included a 12V battery cartridge, 4 DC motors, a HC-05 chip (bluetooth receiver), Arduino UNO, and L298N motor driver chip. The wires from the DC motors on each side were grouped together and connected to the corresponding ports on the dual motor driver chip. For Bluetooth control, an app was developed using MIT App Inventor for pairing and communication. The app sent text commands when buttons were pressed, which the Arduino interpreted to control the motors.",
     ],
     image: "res/car.png",
     tech: ["Arduino", "C++", "App Dev", "Soldering"],
@@ -308,7 +344,7 @@ const experiences = [
     timeframe: "May 2025 - Aug 2025",
     companyName: "TD Bank",
     preview: "Backend engineer for TD Securities",
-    details: ["Asset database, API, and infrastucture development"],
+    details: ["Asset database, API, and infrastructure development"],
   },
   {
     logoPath: "res/OJ.png",
@@ -316,7 +352,7 @@ const experiences = [
     timeframe: "Sept 2022 - Jun 2024",
     companyName: "Thornhill Secondary School",
     preview:
-      "Developer for the Competitve coding site TSSOJ.ca with over 800 registered users.",
-    details: ["Database and infrastucture stuff"],
+      "Developer for the Competitive coding site TSSOJ.ca with over 800 registered users.",
+    details: ["Database and infrastructure development"],
   },
 ];
